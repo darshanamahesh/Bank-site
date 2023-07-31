@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadescription %}
+    Register Page
+{% endblock %}
+{% block title %}
+ MyBank
+
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<div class="registration form">
+      <header>Signup</header>
+    <form method="post" align="center">
+        {% csrf_token %}
+
+        <input type="text" id="username" name="username" placeholder="Enter your Username" required>
+        <br>
+
+        <input type="password" id="password1" name="password1" placeholder="Enter your password" required>
+        <br>
+
+        <input type="password" id="password2" name="password2" placeholder="Confirm Password" required>
+        <br>
+        <!-- Add other registration fields here, e.g., first_name, last_name, email -->
+        <input type="submit" value="Register">
+    </form></div>
+<h5 align="center" style="color: white;"> Already have an account?
+   <a href="{% url 'login' %}">Login</a></h5>
+    <p>{% if messages %}{{ messages }}{% endif %}</p>
+{% endblock %}

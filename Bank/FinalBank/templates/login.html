@@ -1,0 +1,36 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadescription %}
+    Login Page
+{% endblock %}
+{% block title %}
+ MyBank
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+
+    <div class="login form">
+      <header>Login</header>
+      <form method="post" align="center">
+		{% csrf_token %}
+
+        <input type="text" id="username" name="username" placeholder="Username" required>
+        <br>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+      <br>
+
+     <h5 align="center" style="color: white"> No Account?
+   <a href="{% url 'register' %}">Register here</a></h5>
+    </div>
+
+  </div>
+
+{% endblock %}

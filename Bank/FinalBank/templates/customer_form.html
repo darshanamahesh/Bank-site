@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Applicant Form</title>
+</head>
+<body>
+    <h1>Applicant Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Chained dropdown logic
+        $(document).ready(function() {
+            // On change event of 'district' field
+            $('#id_district').on('change', function() {
+                var districtId = $(this).val();
+                // Send an AJAX request to get branches based on the selected district
+                $.ajax({
+                    url: '/api/get_branches/',  // Replace with the actual API endpoint to fetch branches based on district
+                    method: 'GET',
+                    data: {district_id: districtId},
+                    dataType: 'json',
+                    success: function(data) {
+                        // Clear existing options in 'branch' dropdown
+                        $('#id_branch').empty();
+                        // Append new options based on the retrieved data
+                        $.each(data.branches, function(index, branch) {
+                            $('#id_branch').append($('<option>').text(branch.name).attr('value', branch.id));
+                        });
+                    },
+                    error: function() {
+                        alert('Failed to fetch branches.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+<!--{% load static %}-->
+<!--<div >-->
+<!--<div align="center"><h1>Hello {{user.username}}</h1></div>-->
+<!--<div>-->
+<!--    <h1>Applicant Form</h1>-->
+<!--    <form method="post" >-->
+<!--        {% csrf_token %}-->
+<!--&lt;!&ndash;        {{ form.as_p }}&ndash;&gt;-->
+<!--        <label for="id_district">District:</label>-->
+<!--        {{ form.district }}-->
+<!--        {% if form.district.errors %}-->
+<!--            <div class="error">{{ form.district.errors }}</div>-->
+<!--        {% endif %}-->
+<!--        <br>-->
+<!--        <label for="id_branch">Branch:</label>-->
+<!--        {{ form.branch }}-->
+<!--        {% if form.branch.errors %}-->
+<!--            <div class="error">{{ form.branch.errors }}</div>-->
+<!--        {% endif %}-->
+<!--        <br>-->
+<!--        <button type="submit">Submit</button>-->
+
+<!--        <button> <a  href="{% url 'logout' %}"><i  style="color: blue;">Logout</i><span class="sr-only"></span></a></div>-->
+<!--</button>-->
+<!--    </form></div></div>-->
+
+<!--    <script>-->
+<!--        document.addEventListener('DOMContentLoaded', function() {-->
+<!--            const districtSelect = document.querySelector('.district-select');-->
+<!--            const branchSelect = document.querySelector('.branch-select');-->
+
+<!--            districtSelect.addEventListener('change', function() {-->
+<!--                const selectedDistrictId = this.value;-->
+<!--                console.log('Selected District ID:', selectedDistrictId);-->
+<!--                fetch(`/get_branches/${selectedDistrictId}/`)-->
+<!--                .then(response => response.json())-->
+<!--                .then(data => {-->
+<!--                    // Clear the existing options-->
+<!--                    while (branchSelect.firstChild) {-->
+<!--                        branchSelect.removeChild(branchSelect.firstChild);-->
+<!--                    }-->
+
+<!--                    // Add new options based on the received data-->
+<!--                    data.forEach(branch => {-->
+<!--                        const option = document.createElement('option');-->
+<!--                        option.value = branch.id;-->
+<!--                        option.text = branch.name;-->
+<!--                        branchSelect.appendChild(option);-->
+<!--                    });-->
+<!--                })-->
+<!--                .catch(error => {-->
+<!--                    console.error('Error fetching branches:', error);-->
+<!--                });-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
+
